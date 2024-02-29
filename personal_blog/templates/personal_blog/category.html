@@ -1,0 +1,18 @@
+{% extends "personal_blog/base.html" %}
+
+{% block body %}
+<h2>{{category}}</h2>
+
+{% for post in posts %}
+<h3>{{post.title}}</h3>
+<a href="{% url "blog_detail" post.id %}">Click Here</a>
+<small>{{post.created}}
+{% for category in post.category.all %}
+<a href="{% url "blog_category"  category%}">{{category.name}}</a>
+{% endfor %}
+</small>
+
+<p>{{post.body | slice:":400"}}</p>
+
+{% endfor %}
+{% endblock  %}

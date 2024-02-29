@@ -1,0 +1,38 @@
+{% extends "personal_blog/base.html" %}
+
+{% block body %}
+
+<h4>{{post.title}}</h4>
+<small>{{post.created}}
+    {% for category in post.category.all %}
+    <a href="{% url "blog_category"  category%}">{{category.name}}</a>
+    {% endfor %}
+    </small>
+<p>{{post.body | linebreaks}}</p>
+
+<h6>Comments Section</h6>
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        {{ form.author }}
+    </div>
+    <div>
+        {{ form.body }}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<h3>Comments:</h3>
+{% for comment in comments %}
+    <p>
+        On {{ comment.date }} <b>{{ comment.commented_by }}</b> wrote:
+        <div class="container">{{ comment.body | linebreaks }}
+        </div>
+
+    </p>
+    
+
+{% endfor %}
+    
+{% endblock  %}
